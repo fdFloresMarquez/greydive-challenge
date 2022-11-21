@@ -7,13 +7,13 @@ export type Test = {
   link: string;
   linkVideo: string;
   plataforma: string;
-  preguntas: Question[];
+  preguntas: Task[];
   response: Response;
   timeTest: string;
   transcripcion: string;
 };
 
-export type Question = {
+export type Task = {
   respuesta: string;
   texto: string;
   tiempo: string;
@@ -29,3 +29,8 @@ export type ShippingSchedule = {
   nanoseconds: number;
   seconds: number;
 };
+
+export enum TaskTypes {
+  verbalResponse = 'verbalResponse',
+  opinionScale5 = 'opinionScale5',
+}
