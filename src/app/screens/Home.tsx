@@ -1,32 +1,29 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import {
-  Button,
-  Card,
-  CardBody,
-  CardFooter,
-  CardHeader,
-  SimpleGrid,
-  Heading,
-  Text,
-} from '@chakra-ui/react';
+import { Text } from '@chakra-ui/react';
+
+import { TestGrid } from '../components';
 
 import { api } from '@/api';
 import { Test } from '@/types';
 
 const Home: React.FC = () => {
+  const [status, setStatus] = useState<'pending' | 'resolved' | 'rejected'>('pending');
   const [tests, setTests] = useState<Test[]>([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
-    api.tests.list().then((res) => {
-      setTests(res);
-    });
+    // Simulates fetching data
+    api.tests
+      .list()
+      .then((res) => {
+        setStatus('resolved');
+        setTests(res);
+      })
+      .catch(() => setStatus('rejected'));
   }, []);
 
-  const onNavigate = (id: number): void => {
-    navigate(`/test/${id + 1}`);
-  };
+  if (status === 'pending') {
+    return <Text>Cargando...</Text>;
+  }
 
   return (
     <>
@@ -34,23 +31,7 @@ const Home: React.FC = () => {
         Tests:
       </Text>
 
-      <SimpleGrid spacing={4} templateColumns="repeat(auto-fill, minmax(200px, 1fr))">
-        {tests.map((test: Test, index: number) => {
-          return (
-            <Card key={index} backgroundColor="white">
-              <CardHeader>
-                <Heading size="md">Test de {test.cliente.toUpperCase()}</Heading>
-              </CardHeader>
-              <CardBody>
-                <Text>Preguntas: {test.preguntas.length}</Text>
-              </CardBody>
-              <CardFooter>
-                <Button onClick={() => onNavigate(index)}>View here</Button>
-              </CardFooter>
-            </Card>
-          );
-        })}
-      </SimpleGrid>
+      {status === 'resolved' && <TestGrid tests={tests} />}
     </>
   );
 };
