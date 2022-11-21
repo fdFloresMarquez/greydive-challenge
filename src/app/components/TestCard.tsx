@@ -27,7 +27,9 @@ const TestCard: React.FC<Props> = ({ id, test, handleClick }) => {
         <Text>Enviado: {secondsToDate(test.horarioEnvio.seconds)}</Text>
       </CardBody>
       <CardFooter>
-        <Button onClick={() => handleClick(id)}>View here</Button>
+        <Button colorScheme="orange" onClick={() => handleClick(id)}>
+          View here
+        </Button>
       </CardFooter>
     </ChakraCard>
   );
