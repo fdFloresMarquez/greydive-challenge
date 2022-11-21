@@ -5,3 +5,14 @@
   flex-direction: column;
   color: white;
 }
+
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background: orangered;
+  transform-origin: 0%;
+}
+
